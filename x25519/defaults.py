@@ -1,7 +1,7 @@
 # Setting default curve parameters for X25519
-# equation: y^2 = x^3 + A*x^2 + x over the field defined by prime P
+# equation: y^2 = x^3 + A*x^2 + x over the field defined by prime p
 
-P = 2**255 - 19
+p = 2**255 - 19
 A = 486662
 A24 = (A - 2) // 4
 BASE_X = 9

@@ -1,5 +1,5 @@
 from .group_law import point_addition, point_doubling
-from .defaults import A24, P
+from .defaults import A24, p
 from .field import fadd, fdiv, fmul, fsub, fsquare
 from .point import Point, PointAtInfinity
 
@@ -18,9 +18,9 @@ def cswap(swap: int, a: int, b: int) -> tuple[int, int]:
         tuple[int, int]: The (possibly swapped) integers.
     """
 
-    dummy = swap * (a - b) % P
-    a = (a - dummy) % P
-    b = (b + dummy) % P
+    dummy = swap * (a - b) % p
+    a = (a - dummy) % p
+    b = (b + dummy) % p
     return a, b
 
 def montgomery_ladder(k: int, x: int) -> int:
@@ -30,7 +30,7 @@ def montgomery_ladder(k: int, x: int) -> int:
         k (int): The scalar multiplier.
         x (int): The x-coordinate of the point to be multiplied.
 
-    The intuition is to calculate k*P, where P is the point with x-coordinate x. 
+    The intuition is to calculate k*p, where p is the point with x-coordinate x. 
     
     Returns:
         int: The x-coordinate of the resulting point after multiplication.

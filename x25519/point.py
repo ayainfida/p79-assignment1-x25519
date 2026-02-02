@@ -1,5 +1,5 @@
 from dataclasses import dataclass
-from .defaults import P, A
+from .defaults import p, A
 from .field import fadd, fsqrt, fsquare, fmul
 
 class PointAtInfinity:
@@ -13,9 +13,9 @@ class Point:
     y: int
 
     def __init__(self, x: int, y: int | None = None):
-        self.x = x % P
+        self.x = x % p
         if y is not None:
-            self.y = y % P
+            self.y = y % p
             if not self.is_valid():
                 raise ValueError("The provided point is not a valid point on the curve.")
             
@@ -28,7 +28,7 @@ class Point:
     def is_valid(self) -> bool:
         """
         Check if the point lies on the curve defined by the equation:
-        y^2 = x^3 + A*x^2 + x (mod P)
+        y^2 = x^3 + A*x^2 + x (mod p)
         """
         lhs = fsquare(self.y)
         rhs = fadd(fadd(fmul(fsquare(self.x), self.x), fmul(A, fsquare(self.x))), self.x)
@@ -48,4 +48,4 @@ class Point:
         except ValueError:
             return None
         
-        return y % P
+        return y % p

@@ -1,4 +1,4 @@
-from .defaults import P
+from .defaults import p
 
 def decode_little_endian(b: bytes) -> int:
     """
@@ -16,13 +16,13 @@ def decode_x_coordinate(b: bytes) -> int:
     # Clear the highest bit of the last byte
     b = b[:-1] + bytes([b[-1] & 0x7F])
 
-    return decode_little_endian(b) % P
+    return decode_little_endian(b) % p
 
 def encode_x_coordinate(x: int) -> bytes:
     """
     Encode an x-coordinate integer to a 32-byte little-endian byte sequence.
     """
-    x %= P
+    x %= p
     
     b = bytearray(32)
     for i in range(32):

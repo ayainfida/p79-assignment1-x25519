@@ -1,5 +1,5 @@
 import unittest
-from x25519.defaults import P
+from x25519.defaults import p
 from x25519.encoding import decode_little_endian, encode_x_coordinate, decode_x_coordinate, decode_scalar
 
 class TestEncoding(unittest.TestCase):
@@ -39,23 +39,23 @@ class TestEncoding(unittest.TestCase):
         self.assertEqual(len(encode_x_coordinate(1)), 32)
         self.assertEqual(len(encode_x_coordinate(128)), 32)
 
-        # 2) Encode near P and check length
-        self.assertEqual(len(encode_x_coordinate(P-1)), 32)
-        self.assertEqual(len(encode_x_coordinate(P)), 32)
+        # 2) Encode near p and check length
+        self.assertEqual(len(encode_x_coordinate(p-1)), 32)
+        self.assertEqual(len(encode_x_coordinate(p)), 32)
 
-        #3) Encode bigger than P and check length
-        self.assertEqual(len(encode_x_coordinate(P + 5)), 32)
-        self.assertEqual(len(encode_x_coordinate(P + 123456789)), 32)
+        #3) Encode bigger than p and check length
+        self.assertEqual(len(encode_x_coordinate(p + 5)), 32)
+        self.assertEqual(len(encode_x_coordinate(p + 123456789)), 32)
 
     def test_encode_decode_x_coordinate(self):
-        # Test that encoding followed by decoding returns the original x-coordinate modulo P
-        # Values cover small, near P, and larger than P cases
-        test_values = [0, 1, 128, 123456789, P-1, P, P+5, P+123456789, 2*P+42]
+        # Test that encoding followed by decoding returns the original x-coordinate modulo p
+        # Values cover small, near p, and larger than p cases
+        test_values = [0, 1, 128, 123456789, p-1, p, p+5, p+123456789, 2*p+42]
 
         for x in test_values:
             encoded = encode_x_coordinate(x)
             decoded = decode_x_coordinate(encoded)
-            self.assertEqual(decoded, x % P)
+            self.assertEqual(decoded, x % p)
     
     def test_decode_scalar_length(self):
         # Test that decode_scalar raises ValueError for incorrect lengths and works for correct length
