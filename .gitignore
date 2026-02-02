@@ -32,5 +32,8 @@ uv.lock
 # Docker
 *.log
 
+# ruff cache
+.ruff_cache/
+
 # Ignore examples and test cache
 */__pycache__/
