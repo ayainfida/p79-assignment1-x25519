@@ -105,6 +105,7 @@ python -m unittest tests.test_encoding -v      # Encoding (verbose)
 
 ### Double-and-Add
 - Requires a valid (x, y) coordinates
+- Computes y coordinate using the square root method specified in RFC 8032
 - Recursive implementation
 
 The API allows to select the appropriate algorithm for scalar multiplication. You can use the X25519 API in your own Python code as follows:
