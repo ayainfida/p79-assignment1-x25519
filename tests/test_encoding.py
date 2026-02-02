@@ -1,6 +1,6 @@
 import unittest
 from x25519.defaults import P
-from x25519.encoding import encode_x_coordinate, decode_x_coordinate, decode_scalar
+from x25519.encoding import decode_little_endian, encode_x_coordinate, decode_x_coordinate, decode_scalar
 
 class TestEncoding(unittest.TestCase):
     def test_decode_x_coordinate_length(self):
@@ -11,9 +11,19 @@ class TestEncoding(unittest.TestCase):
             decode_x_coordinate(b'\xff\x22\x30')
         with self.assertRaises(ValueError):
             decode_x_coordinate(b'\x11' * 31)
+
+        # 2) Empty byte string, should raise ValueError
+        with self.assertRaises(ValueError):
+            decode_x_coordinate(b'')
         
-        # 2) Valid length (32 bytes), should not raise
+        # 3) Valid length (32 bytes), should not raise
         decode_x_coordinate(b'\xff\x22\x30\x32' * 8)
+
+        # 4) Overlength should raise ValueError
+        with self.assertRaises(ValueError):
+            decode_x_coordinate(b'\x00' * 33)
+        with self.assertRaises(ValueError):
+            decode_x_coordinate(b'\x01' * 64)
     
     def test_decode_x_coordinate_mask_msb(self):
         # The highest bit of the last byte should be cleared as defined in RFC 7748 for x-coordinate decoding
@@ -49,10 +59,17 @@ class TestEncoding(unittest.TestCase):
     
     def test_decode_scalar_length(self):
         # Test that decode_scalar raises ValueError for incorrect lengths and works for correct length
+        # Fewer than 32 bytes, should raise ValueError
         with self.assertRaises(ValueError):
             decode_scalar(b'\x00\x01\x02')
         with self.assertRaises(ValueError):
+            decode_scalar(b'')
+        with self.assertRaises(ValueError):
             decode_scalar(b'\x00' * 31)
+        # Overlength should raise ValueError
+        with self.assertRaises(ValueError):
+            decode_scalar(b'\x00' * 33)
+        # Valid length (32 bytes), should not raise
         decode_scalar(b'\x00' * 32)
     
     def test_decode_scalar(self):
@@ -70,6 +87,14 @@ class TestEncoding(unittest.TestCase):
         self.assertEqual(decoded_scalar & (1 << 255), 0)  # MSB cleared
         self.assertEqual(decoded_scalar & (1 << 254), 1 << 254)  # Second MSB set
 
+        # As per RFC 7748, the decoded scalar is 2^254 + something between 0 and 2^251 - 1
+        self.assertGreater(decoded_scalar, 2**254)
+
+        # No effect on values that are already clamped, so decoding a clamped scalar should return the same integer
+        test_scalar = bytearray(32)
+        test_scalar[0] = 0xF8
+        test_scalar[31] = 0x40
+        self.assertEqual(decode_scalar(bytes(test_scalar)), decode_little_endian(bytes(test_scalar)))
 
 if __name__ == '__main__':
     unittest.main()
