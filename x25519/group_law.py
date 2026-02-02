@@ -55,14 +55,3 @@ def point_doubling(P: Point | None) -> Point | None:
     y3 = fsub(fmul(slope, fsub(x, x3)), y)
 
     return Point(x3, y3)
-
-
-
-    
-    
-
-
-
-
-
-    
