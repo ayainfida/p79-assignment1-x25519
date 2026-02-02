@@ -1,6 +1,6 @@
 # Assignment 1: Elliptic Curve Diffie-Hellman (X25519)
 
-This project implements X25519 key exchange from scratch in Python, following RFC 7748. It supports both Montgomery ladder and double-and-add scalar multiplication algorithms.
+This assignment implements X25519 key exchange from scratch in Python, following RFC 7748. It supports both Montgomery ladder and double-and-add scalar multiplication algorithms.
 
 ## ⚠️ Security Disclaimer
 
