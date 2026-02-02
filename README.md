@@ -133,6 +133,7 @@ x25519_group_laws = X25519(X25519Algorithm.DOUBLE_AND_ADD)
 - [RFC 7748: Elliptic Curves for Security](https://www.rfc-editor.org/rfc/rfc7748)
 - [RFC 8032: Edwards-Curve Digital Signature Algorithm (EdDSA)](https://www.rfc-editor.org/rfc/rfc8032)
 - [Curve25519: New Diffie-Hellman Speed Records](https://cr.yp.to/ecdh.html) by Daniel J. Bernstein
+- [Implementing Curve25519/X25519: A Tutorial on Elliptic Curve Cryptography](http://martin.kleppmann.com/papers/curve25519.pdf) by Martin Kelppmann
 
 ## License
 
