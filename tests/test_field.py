@@ -1,5 +1,6 @@
 import unittest
 from random import random
+from typing import Callable
 from x25519.defaults import P
 from x25519.field import fadd, fmul, fsub, finv
 
@@ -26,7 +27,7 @@ class TestFieldOperations(unittest.TestCase):
         # Multiplication by zero
         self.assertEqual(fmul(0, 123456), 0)
 
-    def _test_abelian_group_operator(self, a: int, b: int, c: int, operator: callable, identity: int, inverse: int):
+    def _test_abelian_group_operator(self, a: int, b: int, c: int, operator: Callable, identity: int, inverse: int):
         # 1) Closure
         self.assertIsInstance(operator(a, b), int)
 

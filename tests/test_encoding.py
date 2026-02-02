@@ -1,6 +1,6 @@
 import unittest
 from x25519.defaults import P
-from x25519.encoding import encode_x_coordinate, decode_x_coordinate, clamp_scalar, decode_scalar
+from x25519.encoding import encode_x_coordinate, decode_x_coordinate, decode_scalar
 
 class TestEncoding(unittest.TestCase):
     def test_decode_x_coordinate_length(self):

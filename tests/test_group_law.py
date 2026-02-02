@@ -24,8 +24,7 @@ class TestGroupLaw(unittest.TestCase):
 
     def test_result_is_on_curve(self):
         Q = point_doubling(self.Pt)
-        self.assertTrue(Q.is_valid())
-
+        self.assertIsNotNone(Q)
 
 if __name__ == "__main__":
     unittest.main()

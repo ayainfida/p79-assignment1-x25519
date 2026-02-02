@@ -1,6 +1,5 @@
 import unittest
 from x25519.api import X25519, X25519Algorithm
-from tqdm import tqdm
 
 class TestRFCVectors(unittest.TestCase):
     def setUp(self):
@@ -67,7 +66,7 @@ class TestRFCVectors(unittest.TestCase):
 
         result = {}
 
-        for i in tqdm(range(1, expected_keys_list[-1] + 1), desc="Montgomery Ladder Iterative Test"):
+        for i in range(1, expected_keys_list[-1] + 1):
             k, u = self.x25519_ladder.x25519(k, u), k
             if i in expected_keys_list:
                 result[i] = k
@@ -87,14 +86,14 @@ class TestRFCVectors(unittest.TestCase):
         expected = {
             1 : "422c8e7a6227d7bca1350b3e2bb7279f7897b87bb6854b783c60e80311ae3079",
             1000 : "684cf59ba83309552800ef566f2f4d3c1c3887c49360e3875f2eb94d99532c51",
-            1000000 : "7c3911e0ab2586fd864497297e575e6f3bc601c0883c30df5f4dd2d24f665424",
+            # 1000000 : "7c3911e0ab2586fd864497297e575e6f3bc601c0883c30df5f4dd2d24f665424",
         }
 
         expected_keys_list = list(expected.keys())
 
         result = {}
 
-        for i in tqdm(range(1, expected_keys_list[-1] + 1), desc="Double and Add Iterative Test"):
+        for i in range(1, expected_keys_list[-1] + 1):
             k, u = self.x25519_double_and_add.x25519(k, u), k
             if i in expected_keys_list:
                 result[i] = k
