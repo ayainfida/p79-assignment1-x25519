@@ -107,7 +107,17 @@ python -m unittest tests.test_encoding -v      # Encoding (verbose)
 - Requires a valid (x, y) coordinates
 - Recursive implementation
 
-The API allows to select the appropriate algorithm for scalar multiplication.
+The API allows to select the appropriate algorithm for scalar multiplication. You can use the X25519 API in your own Python code as follows:
+
+```python
+from x25519 import X25519, X25519Algorithm
+
+# x25519 using montgomery ladder 
+x25519_ladder = X25519(X25519Algorithm.LADDER)
+
+# x25519 using group laws
+x25519_group_laws = X25519(X25519Algorithm.DOUBLE_AND_ADD)
+```
 
 ## Implementation Notes
 
