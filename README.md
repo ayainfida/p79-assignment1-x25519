@@ -120,14 +120,6 @@ x25519_ladder = X25519(X25519Algorithm.LADDER)
 x25519_group_laws = X25519(X25519Algorithm.DOUBLE_AND_ADD)
 ```
 
-## Implementation Notes
-
-- **Field arithmetic**: Uses Fermat's Little Theorem for inversion (`pow(a, P-2, P)`)
-- **Square roots**: Implements RFC 8032 algorithm with two candidate roots
-- **Scalar clamping**: Clears 3 LSBs, clears MSB, sets second MSB per RFC 7748
-- **MSB handling**: Clears highest bit before decoding x-coordinates
-- **Point at infinity**: Uses proper sentinel type (`PointAtInfinity`) instead of `None`
-
 ## References
 
 - [RFC 7748: Elliptic Curves for Security](https://www.rfc-editor.org/rfc/rfc7748)
