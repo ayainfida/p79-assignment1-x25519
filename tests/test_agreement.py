@@ -1,8 +1,7 @@
 import os
 import unittest
-from x25519.api import X25519, X25519Algorithm
+from x25519 import X25519, X25519Algorithm, Point
 from x25519.encoding import decode_x_coordinate
-from x25519.point import Point
 
 class TestX25519Agreement(unittest.TestCase):
     def setUp(self):

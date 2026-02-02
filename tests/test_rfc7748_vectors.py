@@ -1,5 +1,5 @@
 import unittest
-from x25519.api import X25519, X25519Algorithm
+from x25519 import X25519, X25519Algorithm
 
 class TestRFCVectors(unittest.TestCase):
     def setUp(self):
