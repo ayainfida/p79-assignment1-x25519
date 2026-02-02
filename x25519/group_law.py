@@ -1,0 +1,68 @@
+from .defaults import INF, A
+from .field import fadd, fmul, fsquare, fsub, fdiv
+from .point import Point
+
+
+def point_addition(P: Point | None, Q: Point | None) -> Point | None:
+    """
+    Add two points P and Q on the Curve25519.
+    """
+    if P == INF:
+        return Q
+    elif Q == INF:
+        return P
+    
+    x1, y1 = P.x, P.y
+    x2, y2 = Q.x, Q.y
+
+    if x1 == x2 and fadd(y1, y2) == 0:
+        return INF
+    elif x1 == x2:
+        return point_doubling(P)
+    
+    # Computing x3
+    slope = fdiv(fsub(y2, y1), fsub(x2, x1))
+    slope_square = fsquare(slope)
+    x3 = fsub(fsub(slope_square, A), fadd(x1, x2))
+
+    # Computing y3
+    y3 = fsub(fmul(slope, fsub(x1, x3)), y1)
+
+    return Point(x3, y3)
+
+def point_doubling(P: Point | None) -> Point | None:
+    """
+    Double a point P on the Curve25519.
+    """
+    if P == INF:
+        return INF
+    
+    x, y = P.x, P.y
+
+    if y == 0:
+        return INF
+
+    # Computing x3
+    xx = fsquare(x)
+    ax = fmul(A, x)
+    slope = fdiv(
+        fadd(fadd(fmul(3, xx), fmul(2, ax)), 1), 
+        fadd(y, y))
+    slope_square = fsquare(slope)
+    x3 = fsub(fsub(slope_square, A), fadd(x, x))
+
+    # Computing y3
+    y3 = fsub(fmul(slope, fsub(x, x3)), y)
+
+    return Point(x3, y3)
+
+
+
+    
+    
+
+
+
+
+
+    
