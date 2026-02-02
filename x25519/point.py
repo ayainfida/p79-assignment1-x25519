@@ -2,6 +2,11 @@ from dataclasses import dataclass
 from .defaults import P, A
 from .field import fadd, fsqrt, fsquare, fmul
 
+class PointAtInfinity:
+    pass
+
+INF = PointAtInfinity()
+
 @dataclass
 class Point:
     x: int

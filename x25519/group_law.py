@@ -1,9 +1,9 @@
-from .defaults import INF, A
+from .defaults import A
 from .field import fadd, fmul, fsquare, fsub, fdiv
-from .point import Point
+from .point import Point, PointAtInfinity, INF
 
 
-def point_addition(P: Point | None, Q: Point | None) -> Point | None:
+def point_addition(P: Point | PointAtInfinity, Q: Point | PointAtInfinity) -> Point | PointAtInfinity:
     """
     Add two points P and Q on the Curve25519.
     """
@@ -30,7 +30,7 @@ def point_addition(P: Point | None, Q: Point | None) -> Point | None:
 
     return Point(x3, y3)
 
-def point_doubling(P: Point | None) -> Point | None:
+def point_doubling(P: Point | PointAtInfinity) -> Point | PointAtInfinity:
     """
     Double a point P on the Curve25519.
     """

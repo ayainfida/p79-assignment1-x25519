@@ -1,6 +1,6 @@
 import unittest
-from x25519.defaults import BASE_X, BASE_Y, INF
-from x25519.point import Point
+from x25519.defaults import BASE_X, BASE_Y
+from x25519.point import Point, INF
 from x25519.group_law import point_addition, point_doubling
 
 """

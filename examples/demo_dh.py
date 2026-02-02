@@ -30,9 +30,7 @@ if __name__ == "__main__":
     alice_shared_secret_hashed = sha256(alice_shared_secret).digest()
     bob_shared_secret_hashed = sha256(bob_shared_secret).digest()
 
-    print("Alice's Private Key:", alice_sk.hex())
     print("Alice's Public Key: ", alice_pk.hex())
-    print("Bob's Private Key:  ", bob_sk.hex())
     print("Bob's Public Key:   ", bob_pk.hex())
     print("Alice's Shared Secret (hashed):", alice_shared_secret_hashed.hex())
     print("Bob's Shared Secret (hashed):  ", bob_shared_secret_hashed.hex())

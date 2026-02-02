@@ -1,7 +1,7 @@
 from .group_law import point_addition, point_doubling
 from .defaults import A24, P
 from .field import fadd, fdiv, fmul, fsub, fsquare
-from .point import Point
+from .point import Point, PointAtInfinity
 
 def cswap(swap: int, a: int, b: int) -> tuple[int, int]:
     """
@@ -73,7 +73,7 @@ def montgomery_ladder(k: int, x: int) -> int:
 
     return result
 
-def double_and_add(k: int, Pt: Point) -> Point | None:
+def double_and_add(k: int, Pt: Point) -> Point | PointAtInfinity:
     """
     Perform scalar multiplication on the Curve25519 using the double-and-add algorithm.
     Args:

@@ -29,7 +29,8 @@ def finv(a: int) -> int:
     Compute inverse by Fermat’s little theorem
     a^(P-1) = a.a^(P-2) ≡ 1 (mod P) 
     """
-    assert a != 0, "Cannot compute inverse of zero."
+    if a == 0:
+        raise ValueError("Cannot compute inverse of zero.")
     return pow(a, P - 2, P)
 
 def fdiv(a: int, b: int) -> int:
