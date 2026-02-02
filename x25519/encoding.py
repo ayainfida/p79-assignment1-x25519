@@ -36,7 +36,6 @@ def clamp_scalar(k: bytes) -> bytes:
     - Set 3 least-significant bits to 0
     - Set the most-significant bit to 0
     - Set the second most-significant bit to 1
-
     """
     if len(k) != 32:
         raise ValueError("Input must be 32 bytes long.")

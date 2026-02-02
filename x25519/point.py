@@ -13,6 +13,12 @@ class Point:
     y: int
 
     def __init__(self, x: int, y: int | None = None):
+        """
+        Initialize a point on the Curve25519.
+        
+        :param x: The x-coordinate of the point.
+        :param y: The y-coordinate of the point (optional).
+        """
         self.x = x % p
         if y is not None:
             self.y = y % p

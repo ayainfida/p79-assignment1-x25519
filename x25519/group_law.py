@@ -6,7 +6,15 @@ from .point import Point, PointAtInfinity, INF
 def point_addition(P: Point | PointAtInfinity, Q: Point | PointAtInfinity) -> Point | PointAtInfinity:
     """
     Add two points P and Q on the Curve25519.
+
+    Args:
+        P (Point | PointAtInfinity): First point.
+        Q (Point | PointAtInfinity): Second point.
+
+    Returns:
+        Point | PointAtInfinity: The resulting point P + Q.
     """
+
     if P == INF:
         return Q
     elif Q == INF:
@@ -33,6 +41,11 @@ def point_addition(P: Point | PointAtInfinity, Q: Point | PointAtInfinity) -> Po
 def point_doubling(P: Point | PointAtInfinity) -> Point | PointAtInfinity:
     """
     Double a point P on the Curve25519.
+    Args:
+        P (Point | PointAtInfinity): The point to double.
+
+    Returns:
+        Point | PointAtInfinity: The resulting point 2P.
     """
     if P == INF:
         return INF

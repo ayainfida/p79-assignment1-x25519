@@ -81,7 +81,7 @@ def double_and_add(k: int, Pt: Point) -> Point | PointAtInfinity:
         Pt (Point): The point to be multiplied.
 
     Returns:
-        Point | None: The resulting point after multiplication.
+        Point | PointAtInfinity: The resulting point after multiplication.
     """
 
     if k == 1:
