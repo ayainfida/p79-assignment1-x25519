@@ -1,4 +1,4 @@
-from .encoding import clamp_scalar, decode_little_endian, decode_x_coordinate, decode_scalar, encode_x_coordinate
+from .encoding import clamp_scalar, decode_x_coordinate, decode_scalar, encode_x_coordinate
 from .methods import montgomery_ladder, double_and_add
 from .defaults import BASE_X, BASE_Y
 from .point import Point

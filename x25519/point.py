@@ -1,6 +1,4 @@
 from dataclasses import dataclass
-
-from x25519.encoding import decode_little_endian, decode_x_coordinate
 from .defaults import P, A
 from .field import fadd, fsqrt, fsquare, fmul
 

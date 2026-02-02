@@ -1,6 +1,5 @@
 from .defaults import P
 
-
 def decode_little_endian(b: bytes) -> int:
     """
     Decode a little-endian byte sequence to an integer.
