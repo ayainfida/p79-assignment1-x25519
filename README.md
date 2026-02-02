@@ -39,7 +39,7 @@ examples/
 └── demo_dh.py       # DH key exchange demo
 
 report/
-└── P79_mafr2_A1.pdf 
+└── P79_mafr2_A1.pdf         # report 
 ```
 
 ## Setup
