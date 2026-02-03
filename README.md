@@ -12,9 +12,8 @@ This assignment implements X25519 key exchange from scratch in Python, following
 - **Complete X25519 API**: Private key generation, public key derivation, and shared secret computation using x25519(.,.)
 - **RFC 7748 compliance**: All test vectors pass on montgomery ladder 
 - **Comprehensive testing**: Tests covering RFC vectors, DH agreement, field operations, group laws and encodings
-- **Type-safe**: Full type annotations with `ty` static type checking
 
-## Project Structure
+## Repo Structure
 
 ```
 x25519/              # Core implementation
@@ -74,7 +73,7 @@ uv run -m unittest   # Run all tests
 
 ### Running the Demo
 
-The project includes an interactive Diffie-Hellman demo that supports both algorithms:
+The repo includes a Diffie-Hellman demo that supports both algorithms:
 
 ```bash
 # Using Montgomery ladder
