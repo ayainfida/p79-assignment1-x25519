@@ -1,4 +1,5 @@
 from dataclasses import dataclass
+from typing import TypeGuard
 from .defaults import p, A
 from .field import fadd, fsqrt, fsquare, fmul
 
@@ -55,3 +56,14 @@ class Point:
             return None
         
         return y % p
+       
+def is_infinity(P: Point | PointAtInfinity) -> TypeGuard[PointAtInfinity]:
+    """
+    Check if the point P is the point at infinity.
+    Args:
+        P (Point | PointAtInfinity): The point to check.
+        
+    Returns:
+        bool: True if P is the point at infinity, False otherwise.
+    """
+    return isinstance(P, PointAtInfinity)

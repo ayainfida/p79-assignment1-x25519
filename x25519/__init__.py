@@ -1,4 +1,4 @@
-from .api import X25519, X25519Algorithm
+from .x25519 import X25519, X25519Algorithm
 from .point import Point, PointAtInfinity
 
 __all__ = [

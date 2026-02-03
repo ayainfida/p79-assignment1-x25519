@@ -1,7 +1,6 @@
 from .defaults import A
 from .field import fadd, fmul, fsquare, fsub, fdiv
-from .point import Point, PointAtInfinity, INF
-
+from .point import Point, PointAtInfinity, INF, is_infinity
 
 def point_addition(P: Point | PointAtInfinity, Q: Point | PointAtInfinity) -> Point | PointAtInfinity:
     """
@@ -15,11 +14,14 @@ def point_addition(P: Point | PointAtInfinity, Q: Point | PointAtInfinity) -> Po
         Point | PointAtInfinity: The resulting point P + Q.
     """
 
-    if P == INF:
+    if is_infinity(P):
         return Q
-    elif Q == INF:
+    elif is_infinity(Q):
         return P
-    
+
+    assert isinstance(P, Point), "P must be a Point after infinity check"
+    assert isinstance(Q, Point), "Q must be a Point after infinity check"
+
     x1, y1 = P.x, P.y
     x2, y2 = Q.x, Q.y
 
@@ -28,12 +30,12 @@ def point_addition(P: Point | PointAtInfinity, Q: Point | PointAtInfinity) -> Po
     elif x1 == x2:
         return point_doubling(P)
     
-    # Computing x3
+    # Computing x3 = lambda^2 - A - x1 - x2
     slope = fdiv(fsub(y2, y1), fsub(x2, x1))
     slope_square = fsquare(slope)
     x3 = fsub(fsub(slope_square, A), fadd(x1, x2))
 
-    # Computing y3
+    # Computing y3 = lambda*(x1 - x3) - y1
     y3 = fsub(fmul(slope, fsub(x1, x3)), y1)
 
     return Point(x3, y3)
@@ -47,15 +49,17 @@ def point_doubling(P: Point | PointAtInfinity) -> Point | PointAtInfinity:
     Returns:
         Point | PointAtInfinity: The resulting point 2P.
     """
-    if P == INF:
+    if is_infinity(P):
         return INF
-    
+
+    assert isinstance(P, Point), "P must be a Point after infinity check"
+
     x, y = P.x, P.y
 
     if y == 0:
         return INF
 
-    # Computing x3
+    # Computing x3 = lambda^2 - A - 2*x
     xx = fsquare(x)
     ax = fmul(A, x)
     slope = fdiv(
@@ -64,7 +68,7 @@ def point_doubling(P: Point | PointAtInfinity) -> Point | PointAtInfinity:
     slope_square = fsquare(slope)
     x3 = fsub(fsub(slope_square, A), fadd(x, x))
 
-    # Computing y3
+    # Computing y3 = lambda*(x - x3) - y
     y3 = fsub(fmul(slope, fsub(x, x3)), y)
 
     return Point(x3, y3)

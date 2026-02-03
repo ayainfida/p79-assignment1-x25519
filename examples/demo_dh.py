@@ -1,7 +1,6 @@
-import os
 import argparse
 from hashlib import sha256
-from x25519.api import X25519, X25519Algorithm
+from x25519 import X25519, X25519Algorithm
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="Demo X25519 DH exchange")
@@ -19,11 +18,11 @@ if __name__ == "__main__":
 
     x25519_instance = X25519(algo)
 
-    alice_sk = os.urandom(32)
-    bob_sk = os.urandom(32)
+    alice_sk = x25519_instance.generate_private_key()
+    bob_sk = x25519_instance.generate_private_key()
 
-    alice_pk = x25519_instance.x25519_base(alice_sk)
-    bob_pk = x25519_instance.x25519_base(bob_sk)
+    alice_pk = x25519_instance.derive_public_key(alice_sk)
+    bob_pk = x25519_instance.derive_public_key(bob_sk)
 
     alice_shared_secret = x25519_instance.x25519(alice_sk, bob_pk)
     bob_shared_secret = x25519_instance.x25519(bob_sk, alice_pk)

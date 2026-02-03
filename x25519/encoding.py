@@ -10,8 +10,7 @@ def decode_x_coordinate(b: bytes) -> int:
     """
     Decode a 32-byte little-endian byte sequence to an x-coordinate integer.
     """
-    if len(b) != 32:
-        raise ValueError("Input must be 32 bytes long.")
+    assert len(b) == 32, "Input must be 32 bytes long."
     
     # Clear the highest bit of the last byte
     b = b[:-1] + bytes([b[-1] & 0x7F])
@@ -37,8 +36,7 @@ def clamp_scalar(k: bytes) -> bytes:
     - Set the most-significant bit to 0
     - Set the second most-significant bit to 1
     """
-    if len(k) != 32:
-        raise ValueError("Input must be 32 bytes long.")
+    assert len(k) == 32, "Input must be 32 bytes long."
 
     k_arr = bytearray(k)
     k_arr[0] &= 248          
@@ -50,9 +48,10 @@ def clamp_scalar(k: bytes) -> bytes:
 def decode_scalar(k: bytes) -> int:
     """
     Decode a 32-byte little-endian byte sequence to a clamped scalar integer.
+    I did clamping first before decoding as per RFC 7748; it's the other way around in lecture notes.
+    However, the result is the same either way.
     """
-    if len(k) != 32:
-        raise ValueError("Input must be 32 bytes long.")
+    assert len(k) == 32, "Input must be 32 bytes long."
     
     k_clamped = clamp_scalar(k)
     return decode_little_endian(k_clamped)

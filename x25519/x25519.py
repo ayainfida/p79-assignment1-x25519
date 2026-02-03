@@ -1,16 +1,16 @@
 from .encoding import clamp_scalar, decode_x_coordinate, decode_scalar, encode_x_coordinate
 from .methods import montgomery_ladder, double_and_add
 from .defaults import BASE_X, BASE_Y
-from .point import Point
+from .point import Point, is_infinity
+from os import urandom
 from enum import Enum
-import os
 
 class X25519Algorithm(Enum):
     LADDER = "ladder"
     DOUBLE_AND_ADD = "double_and_add"
 
 class X25519:
-    def __init__(self, algorithm: X25519Algorithm):
+    def __init__(self, algorithm: X25519Algorithm = X25519Algorithm.LADDER):
         """
         Initialize the X25519 class with the specified algorithm.
         
@@ -30,11 +30,14 @@ class X25519:
         """
         if self.algorithm == X25519Algorithm.LADDER:
             result = montgomery_ladder(k, x)
-        else:
+        elif self.algorithm == X25519Algorithm.DOUBLE_AND_ADD:
             result = double_and_add(k, Point(x))
-            if result is None:
+            if is_infinity(result):
                 raise ValueError("Resulting point is at infinity.")
+            assert isinstance(result, Point), "Result must be a Point after infinity check"
             result = result.x
+        else:
+            raise ValueError(f"Unsupported algorithm: {self.algorithm}")
         
         return encode_x_coordinate(result)
 
@@ -45,6 +48,8 @@ class X25519:
         :param sk: The private key as bytes.
         :return: The resulting public key as bytes.
         """
+        if len(sk) != 32:
+            raise ValueError(f"Private key must be 32 bytes long. Provided length: {len(sk)}")
         k = decode_scalar(sk)
         return self.scalar_mult(k, self.base_point.x)
     
@@ -56,7 +61,12 @@ class X25519:
         :param pk: The public key as bytes.
         :return: The resulting shared secret as bytes.
         """
-        k = decode_scalar(sk)
+        if len(sk) != 32:
+            raise ValueError(f"Private key must be 32 bytes long. Provided length: {len(sk)}")
+        if len(pk) != 32:
+            raise ValueError(f"Public key must be 32 bytes long. Provided length: {len(pk)}")
+        
+        k = decode_scalar(sk) # This includes clamping as well (see encoding.py)
         x = decode_x_coordinate(pk)
         return self.scalar_mult(k, x)
     
@@ -65,7 +75,7 @@ class X25519:
         """
         Generate a new private key.
         """
-        sk = os.urandom(32)
+        sk = urandom(32)
         return clamp_scalar(sk)
     
     def derive_public_key(self, sk: bytes) -> bytes:
@@ -75,4 +85,7 @@ class X25519:
         :param sk: The private key as bytes.
         :return: The corresponding public key as bytes.
         """
+        if len(sk) != 32:
+            raise ValueError(f"Private key must be 32 bytes long. Provided length: {len(sk)}")
+        
         return self.x25519_base(sk)

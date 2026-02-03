@@ -35,6 +35,7 @@ def montgomery_ladder(k: int, x: int) -> int:
     Returns:
         int: The x-coordinate of the resulting point after multiplication.
     """
+    # Projective coordinates representation: (X:Z) represents the coordinate X/Z (just to delay divisions till the end)
 
     x_1 = x
     x_2 = 1
@@ -45,12 +46,14 @@ def montgomery_ladder(k: int, x: int) -> int:
 
     for t in range(254, -1, -1):
         k_t = (k >> t) & 1
-        swap ^= k_t
+        swap ^= k_t # Checks if the previous bit was different from the current bit. If so, we need to swap.
 
+        # Conditional swap based on swap bit
         x_2, x_3 = cswap(swap, x_2, x_3)
         z_2, z_3 = cswap(swap, z_2, z_3)
         swap = k_t
 
+        # Fixed addition and doubling patterns regardless of k_t
         A = fadd(x_2, z_2)
         AA = fsquare(A)
         B = fsub(x_2, z_2)
@@ -61,6 +64,7 @@ def montgomery_ladder(k: int, x: int) -> int:
         DA = fmul(D, A)
         CB = fmul(C, B)
 
+        # Updating x_2, z_2, x_3, z_3
         x_3 = fsquare(fadd(DA, CB))
         z_3 = fmul(x_1, fsquare(fsub(DA, CB)))
         x_2 = fmul(AA, BB)
@@ -86,7 +90,7 @@ def double_and_add(k: int, Pt: Point) -> Point | PointAtInfinity:
 
     if k == 1:
         return Pt
-    elif k & 1 == 0:
+    elif k & 1 == 0: # k is even: we double the point
         return point_doubling(double_and_add(k // 2, Pt))
-    else:
+    else: # k is odd: we first double and then add the original point
         return point_addition(point_doubling(double_and_add((k - 1) // 2, Pt)), Pt)

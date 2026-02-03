@@ -18,7 +18,7 @@ This assignment implements X25519 key exchange from scratch in Python, following
 
 ```
 x25519/              # Core implementation
-├── api.py           # Main X25519 API with algorithm selection
+├── x25519.py        # Main X25519 API with algorithm selection
 ├── point.py         # Point and PointAtInfinity defined
 ├── field.py         # Field arithmetic (add, mul, inv, sqrt, div, sub)
 ├── group_law.py     # Point addition and doubling
@@ -107,7 +107,7 @@ python -m unittest tests.test_encoding -v      # Encoding/decoding/clamping
 - Computes y coordinate using the square root method specified in RFC 8032
 - Recursive implementation
 
-The API allows to select the appropriate algorithm for scalar multiplication. You can use the X25519 API in your own Python code as follows:
+The API allows to select the appropriate algorithm for scalar multiplication (default is set to use ladder based scalar multiplication). You can use the X25519 API in your own Python code as follows:
 
 ```python
 from x25519 import X25519, X25519Algorithm
