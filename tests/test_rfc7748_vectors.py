@@ -8,6 +8,7 @@ class TestRFCVectors(unittest.TestCase):
 
     """
     Test vectors from RFC 7748 Section 5.2 -- single-shot tests
+    These tests use specific input values and check against expected outputs.
     """
     def test_rfc_vector_1(self):
         k = bytes.fromhex(
@@ -46,6 +47,8 @@ class TestRFCVectors(unittest.TestCase):
     
     """
     Test vectors from RFC 7748 Section 5.2 -- iterative tests
+    These tests perform repeated applications of the X25519 function, starting from a known value.
+    The expected outputs after these iterations are provided in the RFC.
     """
     def test_rfc_iterative_vector_montgomery_ladder(self):
         k = bytes.fromhex(
@@ -86,7 +89,8 @@ class TestRFCVectors(unittest.TestCase):
         expected = {
             1 : "422c8e7a6227d7bca1350b3e2bb7279f7897b87bb6854b783c60e80311ae3079",
             1000 : "684cf59ba83309552800ef566f2f4d3c1c3887c49360e3875f2eb94d99532c51",
-            # 1000000 : "7c3911e0ab2586fd864497297e575e6f3bc601c0883c30df5f4dd2d24f665424",
+            # I have commented this out as it takes too long to compute about 30 minutes but it works correctly
+            # 1000000 : "7c3911e0ab2586fd864497297e575e6f3bc601c0883c30df5f4dd2d24f665424", 
         }
 
         expected_keys_list = list(expected.keys())

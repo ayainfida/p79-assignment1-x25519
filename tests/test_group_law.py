@@ -13,17 +13,21 @@ class TestGroupLaw(unittest.TestCase):
         self.Pt = Point(BASE_X, BASE_Y)
 
     def test_base_point_is_valid(self):
+        # Ensure the base point lies on the curve
         self.assertTrue(self.Pt.is_valid())
 
     def test_identity(self):
+        # Test that adding the identity point returns the original point
         self.assertEqual(point_addition(self.Pt, INF), self.Pt)
         self.assertEqual(point_addition(INF, self.Pt), self.Pt)
 
     def test_doubling_matches_addition(self):
+        # Sanity check: doubling a point should equal adding the point to itself
         self.assertEqual(point_doubling(self.Pt), point_addition(self.Pt, self.Pt))
 
     def test_result_is_on_curve(self):
-        Q = point_doubling(self.Pt)
+        # Ensure the result of doubling is still on the curve
+        Q = point_doubling(self.Pt) # Note: the constructor ensures validity itself so no need to explicitly call `is_valid()`
         self.assertIsNotNone(Q)
 
 if __name__ == "__main__":

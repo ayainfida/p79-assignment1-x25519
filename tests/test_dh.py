@@ -8,6 +8,10 @@ class TestRFCdh(unittest.TestCase):
         self.x25519_ladder = X25519(X25519Algorithm.LADDER)
         self.x25519_double_and_add = X25519(X25519Algorithm.DOUBLE_AND_ADD)
 
+    """
+    Helper function to test Diffie-Hellman key exchange using provided vectors
+    It tests key generation, public key derivation, and shared secret computation
+    """
 
     def _set_dh_vectors(self, alice_sk: bytes, bob_sk: bytes, alice_pk: bytes, bob_pk: bytes, shared_secret: bytes):
         # Return a dictionary of the provided DH vectors

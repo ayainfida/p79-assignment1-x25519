@@ -4,16 +4,15 @@ This assignment implements X25519 key exchange from scratch in Python, following
 
 ## ⚠️ Security Disclaimer
 
-**This implementation is for educational purposes only and is NOT suitable for production use.**
+**This implementation is for educational purposes only (in particular, submission for Assignment 1 of P79: Cryptography and Protocol Engineering offered at the University of Cambridge) and is NOT suitable for production use.**
 
 ## Features
 
 - **Two scalar multiplication algorithms**: Montgomery ladder and double-and-add
 - **Complete X25519 API**: Private key generation, public key derivation, and shared secret computation using x25519(.,.)
 - **RFC 7748 compliance**: All test vectors pass on montgomery ladder 
-- **Comprehensive testing**: 27 tests covering RFC vectors, DH agreement, field operations, group laws and encodings
+- **Comprehensive testing**: Tests covering RFC vectors, DH agreement, field operations, group laws and encodings
 - **Type-safe**: Full type annotations with `ty` static type checking
-- **Production-ready build**: Docker-based build with linting and type checking
 
 ## Project Structure
 
@@ -90,10 +89,10 @@ This generates random key pairs for Alice and Bob, performs DH key exchange, and
 ### Running Specific Test Suites
 
 ```bash
-python -m unittest tests.test_rfc7748_vectors  # RFC vectors only
+python -m unittest tests.test_rfc7748_vectors  # RFC test vectors (section 5.2) only
 python -m unittest tests.test_dh               # DH key exchange
 python -m unittest tests.test_field            # Field operations
-python -m unittest tests.test_encoding -v      # Encoding (verbose)
+python -m unittest tests.test_encoding -v      # Encoding/decoding/clamping
 ```
 
 ## Algorithm Details

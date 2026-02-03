@@ -28,6 +28,14 @@ class TestFieldOperations(unittest.TestCase):
         self.assertEqual(fmul(0, 123456), 0)
 
     def _test_abelian_group_operator(self, a: int, b: int, c: int, operator: Callable, identity: int, inverse: int):
+        """
+        Helper method to test abelian group properties for a given operator.
+        Args:
+            a, b, c: Elements of the field to test with.
+            operator: The binary operation to test (e.g., fadd or fmul).
+            identity: The identity element for the operation.
+            inverse: The inverse of element a for the operation.
+        """
         # 1) Closure
         self.assertIsInstance(operator(a, b), int)
 
@@ -42,13 +50,20 @@ class TestFieldOperations(unittest.TestCase):
 
         # 5) Inverse exists: a ⊕ a_inv = e
         self.assertEqual(operator(a, inverse), identity)
+
+    """
+    Test that field addition and multiplication satisfy the abelian group properties
+    It tests closure, commutativity, associativity, identity, and inverse for both operations.
+    For addition, identity is 0 and inverse is -a mod p.
+    For multiplication, identity is 1 and inverse is a^{-1} mod p.
+    """
     
     def test_abelian_group_fadd(self):
         for _ in range(10):
             a = int(random() * p)
             b = int(random() * p)
             c = int(random() * p)
-            self._test_abelian_group_operator(a, b, c, fadd, 0, -a)
+            self._test_abelian_group_operator(a, b, c, fadd, 0, -a % p)
     
     def test_abelian_group_fmul(self):
         for _ in range(10):
